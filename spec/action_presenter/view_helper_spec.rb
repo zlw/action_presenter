@@ -1,9 +1,10 @@
 require 'spec_helper'
-require 'support/view_helper'
+require 'support/string_presenter'
+require 'support/dummy_action_controller'
 
 
 describe ActionPresenter::ViewHelper do
-  let(:helper) { DummyActionController.send(:include, ActionPresenter::ViewHelper).new }
+  include ActionControllerHelper
 
   it 'should call default presenter if presenter class is not given' do
     helper.present('foobar') do |p|

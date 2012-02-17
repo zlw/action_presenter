@@ -1,5 +1,7 @@
 module ActionPresenter
   class Base
+    include Defaults::Timestamps
+
     def initialize(object, template)
       @object, @template = object, template
     end
@@ -7,6 +9,7 @@ module ActionPresenter
   private
 
     named_reader :template, as: :h
+    attr_reader :object
 
     def self.presents(name)
       named_reader :object, as: name
