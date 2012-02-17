@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'support/base'
+require 'support/dummy_presenter'
 
 
 describe ActionPresenter::Base do
