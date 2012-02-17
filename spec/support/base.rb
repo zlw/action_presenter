@@ -1,2 +1,2 @@
-class DummyPresenter < SimplePresenter::Base
+class DummyPresenter < ActionPresenter::Base
 end

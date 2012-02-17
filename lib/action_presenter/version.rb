@@ -1,3 +1,3 @@
-module SimplePresenter
+module ActionPresenter
   VERSION = "0.0.1"
 end

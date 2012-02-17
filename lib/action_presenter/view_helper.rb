@@ -1,4 +1,4 @@
-module SimplePresenter
+module ActionPresenter
   module ViewHelper
     extend ActiveSupport::Concern
 

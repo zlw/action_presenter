@@ -8,13 +8,13 @@ Use presenter pattern in Rails application without changing controllers.
 ## Installation
 
 ```ruby
-gem 'simple_presenter'
+gem 'action_presenter'
 ```
 
 or
 
 ```ruby
-gem 'simple_presenter', git: 'git@github.com:zlw/simple_presenter.git'
+gem 'action_presenter', git: 'git@github.com:zlw/action_presenter.git'
 ```
 
 Gem was tested under 1.9.3 and Rails 3.2.1
@@ -25,7 +25,7 @@ Create presenter class
 
 ```ruby
 # /app/presenters/post_presenter.rb
-class PostPresenter
+class PostPresenter < ActionPresenter::Base
   presents :post
 
   def title

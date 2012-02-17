@@ -1,4 +1,4 @@
-module SimplePresenter
+module ActionPresenter
   class Base
     def initialize(object, template)
       @object, @template = object, template

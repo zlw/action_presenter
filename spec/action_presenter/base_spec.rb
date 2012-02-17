@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'support/base'
 
 
-describe SimplePresenter::Base do
+describe ActionPresenter::Base do
   let(:template) { mock(Object) }
   let(:object) { mock(Object) }
 
