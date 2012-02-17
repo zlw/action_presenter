@@ -1,4 +1,4 @@
-## Description
+## ActionPresenter [![Build Status](https://secure.travis-ci.org/zlw/action_presenter.png?branch=master)](http://travis-ci.org/zlw/action_presenter)
 
 Missing link between models and views.
 Use presenter pattern in Rails application without changing controllers.
@@ -17,7 +17,7 @@ or
 gem 'action_presenter', git: 'git@github.com:zlw/action_presenter.git'
 ```
 
-Gem was tested under 1.9.3 and Rails 3.2.1
+Gem was tested under Ruby 1.9.2 and 1.9.3, Rails 3.2.1
 
 ## Usage
 
@@ -58,6 +58,23 @@ If You want to change presenter class pass it as second argument
 ```
 
 All that without any change in any model or controller
+
+## Defaults
+
+There're some default presenter methods. They're generated if object respond to those methods
+
+* `created_at` - localized date of create
+* `updated_at` - localized date of last update
+
+```haml
+- present @article do |p|
+ = p.created_at #=> "February 17, 2012 12:30"
+ = p.updated_at #=> "February 17, 2012 13:27"
+```
+
+## Maintainers
+
+* Krzysztof Zalewski (https://github.com/zlw, http://kzalewski.blogspot.com)
 
 ## License
 
