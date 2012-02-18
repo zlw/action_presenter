@@ -43,4 +43,17 @@ describe ActionPresenter::Defaults::Timestamps do
       end.should == time
     end
   end
+
+  context "#format" do
+    it 'should return short localized date' do
+      I18n.should_receive(:l).with(time_now, {format: :short}).and_return time
+      klass.created_at(:short).should == time
+    end
+
+    it 'should return long localized date' do
+      I18n.should_receive(:l).with(time_now, {format: :long}).and_return time
+      klass.created_at(:long).should == time
+    end
+
+  end
 end
