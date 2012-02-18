@@ -17,10 +17,6 @@ require 'action_presenter/view_helper'
 ## Railtie
 require 'action_presenter/railtie' if defined? Rails
 
-## RSpec integration
-require 'rspec_integration' if defined?(RSpec) && defined?(RSpec::Rails)
-
-
 
 module ActionPresenter
 end
