@@ -7,11 +7,9 @@ module ActionPresenter
 
     class_option 'test-framework', type: :string, default: :rspec, aliases: '-t', desc: 'Test framework (RSpec or Test::Unit)'
 
-    def build_app_presenters_folder
+    def build_presenters_folder
       empty_directory 'app/presenters'
-    end
 
-    def build_test_presenters_folder
       case options['test-framework']
         when 'rspec'
           empty_folder 'spec/presenters'
