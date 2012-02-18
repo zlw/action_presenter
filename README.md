@@ -7,14 +7,22 @@ Use presenter pattern in Rails application without changing controllers.
 
 ## Installation
 
+**Add `action_presenter` to Gemfile**
+
 ```ruby
 gem 'action_presenter'
+# or
+gem 'action_presenter', git: 'git@github.com:zlw/action_presenter.git'
 ```
 
-or
+**and than install**
 
-```ruby
-gem 'action_presenter', git: 'git@github.com:zlw/action_presenter.git'
+```bash
+# for RSpec
+rails generate action_presenter:intall -t rspec
+
+# for Test::Unit
+rails generate action_presenter:install -t test_unit
 ```
 
 Gem was tested under Ruby 1.9.2 and 1.9.3, Rails 3.2.1
@@ -70,6 +78,48 @@ There're some default presenter methods. They're generated if object respond to 
 - present @article do |p|
  = p.created_at #=> "February 17, 2012 12:30"
  = p.updated_at #=> "February 17, 2012 13:27"
+```
+
+It's also possible to change timestamps format
+
+```haml
+- present @article do |p|
+  = p.created_at :short
+  = p.updated_at :long
+```
+
+## Testing
+
+### RSpec
+
+```ruby
+require 'spec_helper'
+
+describe ArticlePresenter do
+  include ActionView::TestCase::Behavior
+
+  let(:article) { mock_model(Article) }
+  let(:presenter) { ArticlePresenter.new(article, view) }
+end
+```
+
+You can change RSpec configuration to include `ActionView::TestCase::Behavior` in all specs in `/spec/presenters` folder
+
+```ruby
+RSpec.configure do |config|
+  # a lot of code here ...
+
+  config.include ActionView::TestCase::Behavior, example_group: { file_path: %r{spec/presenters} }
+end
+```
+
+### Test::Unit
+
+```ruby
+require 'test_helper'
+
+class TestArticlePresenter < ActionView::TestCase
+end
 ```
 
 ## Maintainers
