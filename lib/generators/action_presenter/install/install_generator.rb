@@ -12,9 +12,9 @@ module ActionPresenter
 
       case options['test-framework']
         when 'rspec'
-          empty_folder 'spec/presenters'
+          empty_directory 'spec/presenters'
         when 'test_unit'
-          empty_folder 'test/unit/presenters'
+          empty_directory 'test/unit/presenters'
       end
     end
   end
