@@ -7,7 +7,10 @@ module ActionPresenter
     end
 
     def present(object, klass = "#{object.class}Presenter".constantize)
-      yield klass.new(object, view_context) if block_given?
+      presenter = klass.new(object, view_context)
+
+      return yield presenter if block_given?
+      presenter
     end
   end
 end
