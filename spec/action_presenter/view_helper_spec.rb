@@ -18,7 +18,7 @@ describe ActionPresenter::ViewHelper do
     end
   end
 
-  it 'should return nil if no block is given' do
-    helper.present('foobar').should be_nil
+  it 'should return presenter instance if no block is given' do
+    helper.present('foobar').should be_instance_of StringPresenter
   end
 end
