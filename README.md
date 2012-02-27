@@ -71,8 +71,7 @@ All that without any change in any model or controller
 
 There're some default presenter methods. They're generated if object respond to those methods
 
-* `created_at` - localized date of create
-* `updated_at` - localized date of last update
+### `created_at` and `updated_at`
 
 ```haml
 - present @article do |p|
@@ -86,6 +85,29 @@ It's also possible to change timestamps format
 - present @article do |p|
   = p.created_at :short
   = p.updated_at :long
+```
+
+## Utilities
+
+### Let
+
+There's RSpec inspired way to define methods
+
+```ruby
+class ArticlePresenter < ActionPresenter::Base
+  presents :article
+
+  let(:link_to_title) { link_to_unless_current article.title, article_path(article) }
+
+  let(:render_article) do
+    html = ''.html_safe
+
+    html += content_tag :h1, article.title
+    html += content_tag :p, article.content
+
+    html
+  end
+end
 ```
 
 ## Testing

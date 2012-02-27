@@ -10,3 +10,8 @@
 
 * add rails generators
 * allow to change timestamps format
+
+## Version 1.1
+
+* fix `present` helper to return presenter instance if no block is given (test braking change - release new minor version)
+* RSpec inspired way to define short and consise methods
