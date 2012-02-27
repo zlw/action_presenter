@@ -2,6 +2,8 @@ module ActionPresenter
   class Base
     include Defaults::Timestamps
 
+    include Utilities::Let
+
     def initialize(object, template)
       @object, @template = object, template
     end
