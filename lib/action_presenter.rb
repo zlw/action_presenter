@@ -10,6 +10,9 @@ require 'action_presenter/version'
 ## Default fields
 require 'action_presenter/defaults/timestamps'
 
+## Utilities
+require 'action_presenter/utilities/let'
+
 ## Base presenter class and view helpers
 require 'action_presenter/base'
 require 'action_presenter/view_helper'
