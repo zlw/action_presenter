@@ -8,17 +8,17 @@ describe ActionPresenter::ViewHelper do
 
   it 'should call default presenter if presenter class is not given' do
     helper.present('foobar') do |p|
-      p.foobar
-    end.should == 'foo'
+      p.should be_instance_of StringPresenter
+    end
   end
 
   it 'should call given presenter class' do
     helper.present('foobar', FoobarPresenter) do |p|
-      p.foobar
-    end.should == 'bar'
+      p.should be_instance_of FoobarPresenter
+    end
   end
 
-  it 'should return nil if no block is given' do
-    helper.present('foobar').should be_nil
+  it 'should return presenter instance if no block is given' do
+    helper.present('foobar').should be_instance_of StringPresenter
   end
 end
