@@ -9,3 +9,9 @@ class FoobarPresenter < ActionPresenter::Base
     'bar'
   end
 end
+
+
+module Foo
+  class StringPresenter < ActionPresenter::Base
+  end
+end
