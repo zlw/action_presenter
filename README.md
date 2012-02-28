@@ -1,4 +1,4 @@
-## ActionPresenter [![Build Status](https://secure.travis-ci.org/zlw/action_presenter.png?branch=master)](http://travis-ci.org/zlw/action_presenter)
+# ActionPresenter [![Build Status](https://secure.travis-ci.org/zlw/action_presenter.png?branch=master)](http://travis-ci.org/zlw/action_presenter)
 
 Missing link between models and views.
 Use presenter pattern in Rails application without changing controllers.
@@ -29,7 +29,7 @@ Gem was tested under Ruby 1.9.2 and 1.9.3, Rails 3.2.1
 
 ## Usage
 
-Create presenter class
+### Creating presenter class
 
 ```ruby
 # /app/presenters/post_presenter.rb
@@ -48,7 +48,7 @@ end
 
 You can use all view helpers without any changes. Reference to model by method with the name passed to `presents` class method.
 
-and then use it in view
+### Calling presenter
 
 ```haml
 # /app/views/posts/index.html.haml
@@ -57,15 +57,33 @@ and then use it in view
   = p.content
 ```
 
-If You want to change presenter class pass it as second argument
+It will call (by default) `PostPresenter` (assuming that @post variable is instance of Post class)
 
-```haml
-# /app/views/post/show.html.haml
-- present @post, PostShowPresenter do |p|
-  = p.title
+There are some ways to change default presenter class
+
+#### 1. Pass class as second argument
+
+```ruby
+present @post, ArticlePresenter
 ```
 
-All that without any change in any model or controller
+It will call `ArticlePresenter` class
+
+#### 2. Scope variable
+
+```ruby
+present [:admin, @post]
+```
+
+It will call `Admin::PostPresenter` class
+
+**Please, keep in mind, that passing presenter class has higher priority than scope:**
+
+```ruby
+present [:admin, @post], ArticlePresenter
+```
+
+**It will also call `ShowPostPresenter` class**
 
 ## Defaults
 
