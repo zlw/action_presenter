@@ -83,7 +83,7 @@ It will call `Admin::PostPresenter` class
 present [:admin, @post], ArticlePresenter
 ```
 
-**It will also call `ShowPostPresenter` class**
+**It will also call `ArticlePresenter` class**
 
 ## Defaults
 
