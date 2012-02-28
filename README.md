@@ -162,6 +162,15 @@ class TestArticlePresenter < ActionView::TestCase
 end
 ```
 
+## Feature requests, contributing to project
+
+Well, I am not sitting all day and thinking about fancy stuff that I could add to action_presenter. 
+Everytime I need something I add this to my current project, than extract it to this gem and release a new version.
+
+If you need something - please create an issue with feature request or, wchich is more welcome (my time is also limited), send pull request.
+
+Also if you something is missing/broken, please do not think `Man, this gem sucks and its author is shitty coder` and no longer use it! Let me know about it - create an issue or send patch.
+
 ## Maintainers
 
 * Krzysztof Zalewski (https://github.com/zlw, http://kzalewski.blogspot.com)
