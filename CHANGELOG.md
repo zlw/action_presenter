@@ -15,3 +15,7 @@
 
 * fix `present` helper to return presenter instance if no block is given (test braking change - release new minor version)
 * RSpec inspired way to define short and consise methods
+
+## Version 1.1.1
+
+* allow to scope variable when calling #present helper `present [:admin, @article]`
