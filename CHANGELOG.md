@@ -19,3 +19,8 @@
 ## Version 1.1.1
 
 * allow to scope variable when calling #present helper `present [:admin, @article]`
+
+## Version 1.1.2
+
+* bugfix: scoping variable was causing errors (passed object was an array)
+* integrate ViewHelper with Cells/Apotomo if it's installed
