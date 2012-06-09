@@ -1,12 +1,10 @@
 module ActionPresenter
   module Defaults
     module Timestamps
-      def created_at(format = :default)
-        localize_time :created_at, format
-      end
-
-      def updated_at(format = :default)
-        localize_time :updated_at, format
+      [:created_at, :updated_at].each do |timestamp|
+        define_method timestamp do |format = :default|
+          localize_time timestamp, format
+        end
       end
 
     private
