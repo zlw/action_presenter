@@ -21,7 +21,7 @@ require 'action_presenter/view_helper'
 require 'action_presenter/railtie' if defined? Rails
 
 ## Integration
-require 'action_presenter/integration/cells' if defined? Cell::Rails
+require 'action_presenter/integration/cells_apotomo' if defined? Cell::Rails
 
 
 module ActionPresenter
