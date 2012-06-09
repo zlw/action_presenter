@@ -8,6 +8,8 @@ module ActionPresenter
 
     def present(object, klass = nil)
       klass ||= presenter_name object
+      object = object.last if object.is_a? Array
+
       presenter = klass.new(object, view_context)
 
       return yield presenter if block_given?
