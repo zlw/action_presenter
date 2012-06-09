@@ -20,6 +20,9 @@ require 'action_presenter/view_helper'
 ## Railtie
 require 'action_presenter/railtie' if defined? Rails
 
+## Integration
+require 'action_presenter/integration/cells' if defined? Cell::Rails
+
 
 module ActionPresenter
 end
