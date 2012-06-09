@@ -24,3 +24,7 @@
 
 * bugfix: scoping variable was causing errors (passed object was an array)
 * integrate ViewHelper with Cells/Apotomo if it's installed
+
+## Version 1.1.3
+
+* bugfix: wrong filename :/
