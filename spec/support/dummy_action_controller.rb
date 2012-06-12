@@ -1,5 +1,5 @@
 class DummyActionController
-  def self.helper_method(name)
+  def self.helper_method(*args)
     nil
   end
 
