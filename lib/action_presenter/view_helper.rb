@@ -7,16 +7,18 @@ module ActionPresenter
     end
 
     def present(object, klass = nil)
-      if klass && object.is_a?(Array)
-        object = object.last
-      end
-
       klass ||= presenter_name object
+
+      object = object.last if object.is_a? Array
 
       presenter = klass.new(object, view_context)
 
       return yield presenter if block_given?
       presenter
+    end
+
+    def present_collection(objects, klass = nil)
+      present([objects], klass)
     end
 
   private

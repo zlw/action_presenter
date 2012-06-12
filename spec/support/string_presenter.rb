@@ -1,4 +1,6 @@
 class StringPresenter < ActionPresenter::Base
+  presents :str
+
   def foobar
     'foo'
   end

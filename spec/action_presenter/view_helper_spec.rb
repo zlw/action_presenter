@@ -49,6 +49,16 @@ describe ActionPresenter::ViewHelper do
     end
   end
 
+  context "#present_collection" do
+    it 'should call present on each element' do
+      collection = ['foo', 'bar']
+      presenter = helper.present_collection(collection, StringPresenter)
+
+      presenter.should be_instance_of StringPresenter
+      presenter.str.should == collection
+    end
+  end
+
   context "#private methods" do
     context "#presenter_name" do
       it 'should return constant for object' do

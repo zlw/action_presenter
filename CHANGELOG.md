@@ -32,3 +32,8 @@
 ## Version 1.1.4
 
 * allow to pass Array as object (klass must be given!)
+
+## Version 1.1.5
+
+* revert previous version changes
+* create #present_collection wchich do what previous version **should** (:sweat:) do
