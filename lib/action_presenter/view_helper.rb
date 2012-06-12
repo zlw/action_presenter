@@ -7,8 +7,11 @@ module ActionPresenter
     end
 
     def present(object, klass = nil)
+      if klass && object.is_a?(Array)
+        object = object.last
+      end
+
       klass ||= presenter_name object
-      object = object.last if object.is_a? Array
 
       presenter = klass.new(object, view_context)
 
