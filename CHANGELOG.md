@@ -37,3 +37,7 @@
 
 * revert previous version changes
 * create #present_collection wchich do what previous version **should** (:sweat:) do
+
+## Version 1.1.6
+
+* add #present_collection to view helper methods (:sweat:)
