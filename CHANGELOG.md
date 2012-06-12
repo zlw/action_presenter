@@ -28,3 +28,7 @@
 ## Version 1.1.3
 
 * bugfix: wrong filename :/
+
+## Version 1.1.4
+
+* allow to pass Array as object (klass must be given!)
