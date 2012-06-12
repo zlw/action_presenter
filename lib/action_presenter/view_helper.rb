@@ -3,7 +3,7 @@ module ActionPresenter
     extend ActiveSupport::Concern
 
     included do
-      helper_method :present
+      helper_method :present, :present_collection
     end
 
     def present(object, klass = nil)
