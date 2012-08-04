@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Action presenter by zlw</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Action presenter</h1>
+        <h2>Missing link between models and views. Use presenter pattern in Rails application without changing controllers.  </h2>
+        <a href="https://github.com/zlw/action_presenter" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>ActionPresenter <a href="http://travis-ci.org/zlw/action_presenter"><img src="https://secure.travis-ci.org/zlw/action_presenter.png?branch=master" alt="Build Status"></a>
+</h1>
+
+<p>Missing link between models and views.
+Use presenter pattern in Rails application without changing controllers.</p>
+
+<p><strong>Based on <em>'Presenters from Scratch'</em> by Ryan Bates.</strong></p>
+
+<h2>Installation</h2>
+
+<p><strong>Add <code>action_presenter</code> to Gemfile</strong></p>
+
+<div class="highlight"><pre><span class="n">gem</span> <span class="s1">'action_presenter'</span>
+<span class="c1"># or</span>
+<span class="n">gem</span> <span class="s1">'action_presenter'</span><span class="p">,</span> <span class="n">git</span><span class="p">:</span> <span class="s1">'git@github.com:zlw/action_presenter.git'</span>
+</pre></div>
+
+<p><strong>and than install</strong></p>
+
+<div class="highlight"><pre><span class="c"># for RSpec</span>
+rails generate action_presenter:intall -t rspec
+
+<span class="c"># for Test::Unit</span>
+rails generate action_presenter:install -t test_unit
+</pre></div>
+
+<p>Gem was tested under Ruby 1.9.2 and 1.9.3, Rails 3.2.1</p>
+
+<h2>Usage</h2>
+
+<h3>Creating presenter class</h3>
+
+<div class="highlight"><pre><span class="c1"># /app/presenters/post_presenter.rb</span>
+<span class="k">class</span> <span class="nc">PostPresenter</span> <span class="o">&lt;</span> <span class="no">ActionPresenter</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">presents</span> <span class="ss">:post</span>
+
+  <span class="k">def</span> <span class="nf">title</span>
+    <span class="n">link_to_unless_current</span> <span class="n">post</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="n">post_path</span><span class="p">(</span><span class="n">post</span><span class="p">),</span> <span class="n">class</span><span class="p">:</span> <span class="ss">:post_title_link</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">content</span>
+    <span class="n">content_tag</span> <span class="ss">:pre</span><span class="p">,</span> <span class="n">post</span><span class="o">.</span><span class="n">content</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+
+<p>You can use all view helpers without any changes. Reference to model by method with the name passed to <code>presents</code> class method.</p>
+
+<h3>Calling presenter</h3>
+
+<div class="highlight"><pre># /app/views/posts/index.html.haml
+<span class="p">-</span> <span class="n">present</span> <span class="vi">@post</span> <span class="k">do</span> <span class="o">|</span><span class="nb">p</span><span class="o">|</span>
+  <span class="p">=</span> <span class="nb">p</span><span class="o">.</span><span class="n">title</span>
+  <span class="p">=</span> <span class="nb">p</span><span class="o">.</span><span class="n">content</span>
+</pre></div>
+
+<p>It will call (by default) <code>PostPresenter</code> (assuming that <a href="https://github.com/post" class="user-mention">@post</a> variable is instance of Post class)</p>
+
+<p>There are some ways to change default presenter class</p>
+
+<h4>1. Pass class as second argument</h4>
+
+<div class="highlight"><pre><span class="n">present</span> <span class="vi">@post</span><span class="p">,</span> <span class="no">ArticlePresenter</span>
+</pre></div>
+
+<p>It will call <code>ArticlePresenter</code> class</p>
+
+<h4>2. Scope variable</h4>
+
+<div class="highlight"><pre><span class="n">present</span> <span class="o">[</span><span class="ss">:admin</span><span class="p">,</span> <span class="vi">@post</span><span class="o">]</span>
+</pre></div>
+
+<p>It will call <code>Admin::PostPresenter</code> class</p>
+
+<p><strong>Please, keep in mind, that passing presenter class has higher priority than scope:</strong></p>
+
+<div class="highlight"><pre><span class="n">present</span> <span class="o">[</span><span class="ss">:admin</span><span class="p">,</span> <span class="vi">@post</span><span class="o">]</span><span class="p">,</span> <span class="no">ArticlePresenter</span>
+</pre></div>
+
+<p><strong>It will also call <code>ArticlePresenter</code> class</strong></p>
+
+<h2>Defaults</h2>
+
+<p>There're some default presenter methods. They're generated if object respond to those methods</p>
+
+<h3>
+<code>created_at</code> and <code>updated_at</code>
+</h3>
+
+<div class="highlight"><pre><span class="p">-</span> <span class="n">present</span> <span class="vi">@article</span> <span class="k">do</span> <span class="o">|</span><span class="nb">p</span><span class="o">|</span>
+ <span class="p">=</span> <span class="nb">p</span><span class="o">.</span><span class="n">created_at</span> <span class="c1">#=&gt; "February 17, 2012 12:30"</span>
+ <span class="p">=</span> <span class="nb">p</span><span class="o">.</span><span class="n">updated_at</span> <span class="c1">#=&gt; "February 17, 2012 13:27"</span>
+</pre></div>
+
+<p>It's also possible to change timestamps format</p>
+
+<div class="highlight"><pre><span class="p">-</span> <span class="n">present</span> <span class="vi">@article</span> <span class="k">do</span> <span class="o">|</span><span class="nb">p</span><span class="o">|</span>
+  <span class="p">=</span> <span class="nb">p</span><span class="o">.</span><span class="n">created_at</span> <span class="ss">:short</span>
+  <span class="p">=</span> <span class="nb">p</span><span class="o">.</span><span class="n">updated_at</span> <span class="ss">:long</span>
+</pre></div>
+
+<h2>Utilities</h2>
+
+<h3>Let</h3>
+
+<p>There's RSpec inspired way to define methods</p>
+
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">ArticlePresenter</span> <span class="o">&lt;</span> <span class="no">ActionPresenter</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">presents</span> <span class="ss">:article</span>
+
+  <span class="n">let</span><span class="p">(</span><span class="ss">:link_to_title</span><span class="p">)</span> <span class="p">{</span> <span class="n">link_to_unless_current</span> <span class="n">article</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="n">article_path</span><span class="p">(</span><span class="n">article</span><span class="p">)</span> <span class="p">}</span>
+
+  <span class="n">let</span><span class="p">(</span><span class="ss">:render_article</span><span class="p">)</span> <span class="k">do</span>
+    <span class="n">html</span> <span class="o">=</span> <span class="s1">''</span><span class="o">.</span><span class="n">html_safe</span>
+
+    <span class="n">html</span> <span class="o">+=</span> <span class="n">content_tag</span> <span class="ss">:h1</span><span class="p">,</span> <span class="n">article</span><span class="o">.</span><span class="n">title</span>
+    <span class="n">html</span> <span class="o">+=</span> <span class="n">content_tag</span> <span class="ss">:p</span><span class="p">,</span> <span class="n">article</span><span class="o">.</span><span class="n">content</span>
+
+    <span class="n">html</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+
+<h2>Testing</h2>
+
+<h3>RSpec</h3>
+
+<div class="highlight"><pre><span class="nb">require</span> <span class="s1">'spec_helper'</span>
+
+<span class="n">describe</span> <span class="no">ArticlePresenter</span> <span class="k">do</span>
+  <span class="kp">include</span> <span class="no">ActionView</span><span class="o">::</span><span class="no">TestCase</span><span class="o">::</span><span class="no">Behavior</span>
+
+  <span class="n">let</span><span class="p">(</span><span class="ss">:article</span><span class="p">)</span> <span class="p">{</span> <span class="n">mock_model</span><span class="p">(</span><span class="no">Article</span><span class="p">)</span> <span class="p">}</span>
+  <span class="n">let</span><span class="p">(</span><span class="ss">:presenter</span><span class="p">)</span> <span class="p">{</span> <span class="no">ArticlePresenter</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">article</span><span class="p">,</span> <span class="n">view</span><span class="p">)</span> <span class="p">}</span>
+<span class="k">end</span>
+</pre></div>
+
+<p>You can change RSpec configuration to include <code>ActionView::TestCase::Behavior</code> in all specs in <code>/spec/presenters</code> folder</p>
+
+<div class="highlight"><pre><span class="no">RSpec</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="c1"># a lot of code here ...</span>
+
+  <span class="n">config</span><span class="o">.</span><span class="n">include</span> <span class="no">ActionView</span><span class="o">::</span><span class="no">TestCase</span><span class="o">::</span><span class="no">Behavior</span><span class="p">,</span> <span class="n">example_group</span><span class="p">:</span> <span class="p">{</span> <span class="n">file_path</span><span class="p">:</span> <span class="sr">%r{spec/presenters}</span> <span class="p">}</span>
+<span class="k">end</span>
+</pre></div>
+
+<h3>Test::Unit</h3>
+
+<div class="highlight"><pre><span class="nb">require</span> <span class="s1">'test_helper'</span>
+
+<span class="k">class</span> <span class="nc">TestArticlePresenter</span> <span class="o">&lt;</span> <span class="no">ActionView</span><span class="o">::</span><span class="no">TestCase</span>
+<span class="k">end</span>
+</pre></div>
+
+<h2>Feature requests, contributing to project</h2>
+
+<p>Well, I am not sitting all day and thinking about fancy stuff that I could add to action_presenter. 
+Everytime I need something I add this to my current project, than extract it to this gem and release a new version.</p>
+
+<p>If you need something - please create an issue with feature request or, wchich is more welcome (my time is also limited), send pull request.</p>
+
+<p>Also if you something is missing/broken, please do not think <code>Man, this gem sucks and its author is shitty coder</code> and no longer use it! Let me know about it - create an issue or send patch.</p>
+
+<h2>Maintainers</h2>
+
+<ul>
+<li>Krzysztof Zalewski (<a href="https://github.com/zlw">https://github.com/zlw</a>, <a href="http://kzalewski.blogspot.com">http://kzalewski.blogspot.com</a>)</li>
+</ul><h2>License</h2>
+
+<p>Copyright (C) 2012 Krzysztof Zalewski</p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/zlw/action_presenter/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/zlw/action_presenter/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/zlw/action_presenter"></a> is maintained by <a href="https://github.com/zlw">zlw</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
