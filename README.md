@@ -19,7 +19,7 @@ gem 'action_presenter', git: 'git@github.com:zlw/action_presenter.git'
 
 ```bash
 # for RSpec
-rails generate action_presenter:intall -t rspec
+rails generate action_presenter:install -t rspec
 
 # for Test::Unit
 rails generate action_presenter:install -t test_unit
